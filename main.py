@@ -1,5 +1,6 @@
 import pandas as pd
-import tensorflow as tf
+from keras.preprocessing import sequence
+from keras.preprocessing.text import Tokenizer
 
 df = pd.read_csv("./train_HW2dataset.csv")
 
