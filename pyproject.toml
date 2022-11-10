@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "sentiment-analysis"
+version = "0.1.0"
+description = ""
+authors = ["wayner0628 <a901639@gmail.com>"]
+readme = "README.md"
+packages = [{include = "sentiment_analysis"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.5.1"
+keras = "^2.10.0"
+scikit-learn = "^1.1.3"
+torch = "1.12.1"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.10.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
