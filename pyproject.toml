@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "sentiment_analysis"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.7"
 pandas = "^1.5.1"
 keras = "^2.10.0"
 torch = "1.12.1"
