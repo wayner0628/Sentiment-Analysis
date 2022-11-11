@@ -66,7 +66,6 @@ if __name__ == "__main__":
             layers.GlobalAveragePooling1D(),
             layers.Dense(20, activation="gelu"),
             layers.Dense(7, activation="gelu"),
-            layers.Dropout(0.1),
             layers.Softmax(),
         ]
     )
