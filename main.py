@@ -11,7 +11,7 @@ class Preprocessing:
     def __init__(self):
         self.data = "Dataset/train_HW2dataset.csv"
         self.max_len = 30
-        self.max_words = 50000
+        self.max_words = 10000
 
     def load_data(self):
         df = pd.read_csv(self.data)
@@ -61,21 +61,19 @@ if __name__ == "__main__":
     embedding_dim = 16
     model = tf.keras.Sequential(
         [
-            layers.Embedding(50000 + 1, embedding_dim),
-            layers.Dropout(0.2),
-            # layers.Conv1D(120, 3, activation='relu'),
+            layers.Embedding(preprocess.max_words + 1, embedding_dim),
+            layers.Conv1D(60, 8, activation='gelu'),
             layers.GlobalAveragePooling1D(),
-            layers.Dropout(0.2),
-            layers.Dense(30, activation="relu"),
-            layers.Dropout(0.2),
-            layers.Dense(7, activation="relu"),
+            layers.Dense(20, activation="gelu"),
+            layers.Dense(7, activation="gelu"),
+            layers.Dropout(0.1),
             layers.Softmax(),
         ]
     )
 
     model.compile(loss=losses.SparseCategoricalCrossentropy(from_logits=False), optimizer="adam", metrics=["accuracy"])
 
-    epochs = 1000
+    epochs = 100
     history = model.fit(ds, epochs=epochs)
     history_dict = history.history
     history_dict.keys()
