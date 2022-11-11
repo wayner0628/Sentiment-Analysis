@@ -24,4 +24,4 @@ index = np.arange(3400)
 data = {'index': index, 'emotion': res}
 
 DF = pd.DataFrame.from_dict(data)
-DF.to_csv('output.csv')
+DF.to_csv('output.csv', index=False)
