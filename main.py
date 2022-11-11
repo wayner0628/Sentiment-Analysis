@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
     model.compile(loss=losses.SparseCategoricalCrossentropy(from_logits=False), optimizer="adam", metrics=["accuracy"])
 
-    epochs = 10
+    epochs = 1000
     history = model.fit(ds, epochs=epochs)
     history_dict = history.history
     history_dict.keys()
