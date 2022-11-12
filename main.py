@@ -20,8 +20,8 @@ class Preprocessing:
     def __init__(self):
         # self.data = "Dataset/train_HW2dataset.csv"
         self.data = "Dataset/Adjust_dataset.csv"
-        self.max_len = 30
-        self.max_words = 10000
+        self.max_len = 50
+        self.max_words = 50000
 
     def load_data(self):
         df = pd.read_csv(self.data)
@@ -73,10 +73,11 @@ if __name__ == "__main__":
     model = tf.keras.Sequential(
         [
             layers.Embedding(preprocess.max_words + 1, embedding_dim),
-            layers.Bidirectional(layers.LSTM(20, recurrent_activation="gelu")),
-            layers.Dropout(0.1),
+            layers.Bidirectional(layers.LSTM(50, recurrent_activation="gelu")),
+            # layers.Dropout(0.1),
             # layers.Conv1D(60, 8, activation='gelu'),
             # layers.GlobalAveragePooling1D(),
+            layers.Dense(50, activation="gelu"),
             layers.Dense(20, activation="gelu"),
             layers.Dense(7, activation="gelu"),
             layers.Softmax(),
