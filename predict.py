@@ -7,7 +7,7 @@ import tensorflow as tf
 preprocess = Preprocessing()
 preprocess.load_data()
 
-df = pd.read_csv('Dataset/test_HW2dataset.csv')
+df = pd.read_csv('Dataset/Adjust_test_dataset.csv')
 text = df["Utterance"].values
 
 token = preprocess.prepare_tokens(text)
