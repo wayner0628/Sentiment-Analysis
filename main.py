@@ -18,7 +18,8 @@ class ArgmaxLayer(Layer):
 
 class Preprocessing:
     def __init__(self):
-        self.data = "Dataset/train_HW2dataset.csv"
+        # self.data = "Dataset/train_HW2dataset.csv"
+        self.data = "Dataset/Adjust_dataset.csv"
         self.max_len = 30
         self.max_words = 10000
 

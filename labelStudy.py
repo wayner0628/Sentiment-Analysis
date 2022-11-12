@@ -1,6 +1,7 @@
 import pandas as pd
 
 df = pd.read_csv('Dataset/train_HW2dataset.csv')
+# df = pd.read_csv('Dataset/Adjust_dataset.csv')
 
 label = df["Emotion"].values
 

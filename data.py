@@ -8,11 +8,19 @@ df = pd.read_csv("Dataset/train_HW2dataset.csv")
 text = df["Utterance"].values
 label = df["Emotion"].values
 
-for t, l in text, label:
+for i in range(df.shape[0]):
+    t = text[i]
+    l = label[i]
     c = cnt[label_map[l]]
     if (c < 338):
         cnt[label_map[l]] += 1
     else:
-        
+        df = df.drop(
+            [
+                i
+            ],
+            axis=0,
+            inplace=False,
+        )
 
-
+df.to_csv('./Dataset/Adjust_dataset.csv')
