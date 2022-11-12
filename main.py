@@ -17,9 +17,9 @@ class ArgmaxLayer(Layer):
 
 
 class Preprocessing:
-    def __init__(self):
+    def __init__(self, path="Dataset/Adjust_dataset.csv"):
         # self.data = "Dataset/train_HW2dataset.csv"
-        self.data = "Dataset/Adjust_dataset.csv"
+        self.data = path
         self.max_len = 50
         self.max_words = 50000
 
@@ -47,38 +47,45 @@ class Preprocessing:
         self.x_train, self.y_train = X, Y
         return df
 
-    def prepare_tokens(self):
+    def prepare_tokens(self, text):
         vectorize_layer = TextVectorization(
             max_tokens=self.max_words, output_mode="int", output_sequence_length=self.max_len, standardize="lower"
         )
         vectorize_layer.adapt(self.x_train)
 
-        return vectorize_layer(self.x_train)
+        return vectorize_layer(text)
 
 
 if __name__ == "__main__":
     preprocess = Preprocessing()
     preprocess.load_data()
-    token = preprocess.prepare_tokens()
+    token = preprocess.prepare_tokens(preprocess.x_train)
     label = tf.convert_to_tensor([label_map[label] for label in preprocess.y_train])
     # one_hot_label = tf.one_hot(label, 7)
+
+    val_preprocess = Preprocessing(path="Dataset/dev_HW2dataset.csv")
+    val_preprocess.load_data()
+    val_token = preprocess.prepare_tokens(val_preprocess.x_train)
+    val_label = tf.convert_to_tensor([label_map[label] for label in val_preprocess.y_train])
 
     ds = tf.data.Dataset.from_tensor_slices((token, label))
     ds = ds.batch(32)
     # AUTOTUNE = tf.data.AUTOTUNE
     # ds = ds.cache().prefetch(buffer_size=AUTOTUNE)
+    val_ds = tf.data.Dataset.from_tensor_slices((val_token, val_label))
+    val_ds = val_ds.batch(32)
 
-    embedding_dim = 16
+    embedding_dim = 128
 
     model = tf.keras.Sequential(
         [
             layers.Embedding(preprocess.max_words + 1, embedding_dim),
-            layers.Bidirectional(layers.LSTM(50, recurrent_activation="gelu")),
+            layers.Bidirectional(layers.LSTM(50)),
             # layers.Dropout(0.1),
             # layers.Conv1D(60, 8, activation='gelu'),
             # layers.GlobalAveragePooling1D(),
-            layers.Dense(50, activation="gelu"),
-            layers.Dense(20, activation="gelu"),
+            layers.Dense(50),
+            layers.Dense(20),
             layers.Dense(7, activation="gelu"),
             layers.Softmax(),
         ]
@@ -88,6 +95,6 @@ if __name__ == "__main__":
     model.compile(loss=losses.SparseCategoricalCrossentropy(from_logits=False), optimizer="adam", metrics=["accuracy"])
 
     epochs = 50
-    model.fit(ds, epochs=epochs)
+    model.fit(ds, epochs=epochs, validation_data=val_ds)
 
     model.save("saved_model/my_model")
