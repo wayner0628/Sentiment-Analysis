@@ -63,7 +63,7 @@ if __name__ == "__main__":
     label = tf.convert_to_tensor([label_map[label] for label in preprocess.y_train])
     # one_hot_label = tf.one_hot(label, 7)
 
-    val_preprocess = Preprocessing(path="Dataset/dev_HW2dataset.csv")
+    val_preprocess = Preprocessing(path="Dataset/Adjust_dev_dataset.csv")
     val_preprocess.load_data()
     val_token = preprocess.prepare_tokens(val_preprocess.x_train)
     val_label = tf.convert_to_tensor([label_map[label] for label in val_preprocess.y_train])
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     val_ds = tf.data.Dataset.from_tensor_slices((val_token, val_label))
     val_ds = val_ds.batch(32)
 
-    embedding_dim = 96
+    embedding_dim = 72
 
     model = tf.keras.Sequential(
         [
@@ -84,7 +84,7 @@ if __name__ == "__main__":
             # layers.Dropout(0.1),
             # layers.Conv1D(60, 8, activation='gelu'),
             # layers.GlobalAveragePooling1D(),
-            layers.Dense(50),
+            layers.Dense(30),
             layers.Dense(20),
             layers.Dense(7, activation="gelu"),
             layers.Softmax(),

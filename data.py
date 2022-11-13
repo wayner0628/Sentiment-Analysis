@@ -4,7 +4,7 @@ import re
 label_map = {"neutral": 0, "anger": 1, "joy": 2, "surprise": 3, "sadness": 4, "disgust": 5, "fear": 6}
 cnt = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
 
-df = pd.read_csv("Dataset/test_HW2dataset.csv")
+df = pd.read_csv("Dataset/dev_HW2dataset.csv")
 
 text = df["Utterance"].values
 idx = 0
@@ -21,6 +21,8 @@ for i in range(df.shape[0]):
     t = re.sub("#", "...", t)
     t = re.sub(":", " ", t)
     t = re.sub('"', " ", t)
+    t = re.sub('‘', " ", t)
+    t = re.sub('\'', " ", t)
     # l = label[i]
     # c = cnt[label_map[l]]
     # if c < 338:
@@ -35,4 +37,4 @@ for i in range(df.shape[0]):
     #     )
     df["Utterance"][i] = t
 
-df.to_csv("./Dataset/Adjust_test_dataset.csv")
+df.to_csv("./Dataset/Adjust_dev_dataset.csv")
