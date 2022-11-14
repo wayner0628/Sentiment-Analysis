@@ -13,8 +13,9 @@ for i in range(df.shape[0]):
     t = text[i]
     t = re.sub("[?]", " ?", t)
     t = re.sub("!", " !", t)
-    t = re.sub("[.][.][.]", " #", t)
+    t = re.sub("[.][.][.]", " # ", t)
     t = re.sub("-", " - ", t)
+    t = re.sub("—", " — ", t)
     t = re.sub(",", " ", t)
     t = re.sub("’", " ’", t)
     t = re.sub("[.]", " .", t)
@@ -23,6 +24,7 @@ for i in range(df.shape[0]):
     t = re.sub('"', " ", t)
     t = re.sub("‘", " ", t)
     t = re.sub("'", " ", t)
+    t = re.sub(";", " ", t)
     t = re.sub("…", " … ", t)
     # l = label[i]
     # c = cnt[label_map[l]]

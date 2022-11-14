@@ -17,11 +17,11 @@ class ArgmaxLayer(Layer):
 
 
 class Preprocessing:
-    def __init__(self, path="Dataset/train_HW2dataset.csv"):
+    def __init__(self, path="Dataset/Adjust_train_dataset.csv"):
         # self.data = "Dataset/train_HW2dataset.csv"
         self.data = path
         self.max_len = 50
-        self.max_words = 100000
+        self.max_words = 7500
 
     def load_data(self):
         df = pd.read_csv(self.data)
@@ -75,18 +75,17 @@ if __name__ == "__main__":
     val_ds = tf.data.Dataset.from_tensor_slices((val_token, val_label))
     val_ds = val_ds.batch(32)
 
-    embedding_dim = 256
+    embedding_dim = 156
 
     model = tf.keras.Sequential(
         [
             layers.Embedding(preprocess.max_words + 1, embedding_dim),
-            # layers.Bidirectional(layers.GRU(128)),
-            layers.GRU(256),
+            layers.Bidirectional(layers.GRU(50)),
             # layers.Dropout(0.1),
             # layers.Conv1D(60, 8, activation='gelu'),
             # layers.GlobalAveragePooling1D(),
-            layers.Dense(128),
             layers.Dense(50),
+            layers.Dense(20),
             layers.Dense(7, activation="gelu"),
             layers.Softmax(),
         ]
@@ -95,7 +94,7 @@ if __name__ == "__main__":
     # f1 = tfa.metrics.F1Score(7, "macro")
     model.compile(loss=losses.SparseCategoricalCrossentropy(from_logits=False), optimizer="adam", metrics=["accuracy"])
 
-    epochs = 30
+    epochs = 10
     model.fit(ds, epochs=epochs, validation_data=val_ds)
 
     model.save("saved_model/my_model")
