@@ -94,7 +94,7 @@ if __name__ == "__main__":
     # f1 = tfa.metrics.F1Score(7, "macro")
     model.compile(loss=losses.SparseCategoricalCrossentropy(from_logits=False), optimizer="adam", metrics=["accuracy"])
 
-    epochs = 10
+    epochs = 20
     model.fit(ds, epochs=epochs, validation_data=val_ds)
 
     model.save("saved_model/my_model")
