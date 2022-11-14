@@ -75,17 +75,16 @@ if __name__ == "__main__":
     val_ds = tf.data.Dataset.from_tensor_slices((val_token, val_label))
     val_ds = val_ds.batch(32)
 
-    embedding_dim = 1
+    embedding_dim = 64
 
     model = tf.keras.Sequential(
         [
             layers.Embedding(preprocess.max_words + 1, embedding_dim),
-            layers.Bidirectional(layers.LSTM(50)),
+            layers.Bidirectional(layers.GRU(128)),
             # layers.Dropout(0.1),
             # layers.Conv1D(60, 8, activation='gelu'),
             # layers.GlobalAveragePooling1D(),
             layers.Dense(30),
-            layers.Dense(10),
             layers.Dense(7, activation="gelu"),
             layers.Softmax(),
         ]
