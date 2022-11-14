@@ -21,7 +21,7 @@ class Preprocessing:
         # self.data = "Dataset/train_HW2dataset.csv"
         self.data = path
         self.max_len = 50
-        self.max_words = 50000
+        self.max_words = 100000
 
     def load_data(self):
         df = pd.read_csv(self.data)
@@ -75,17 +75,18 @@ if __name__ == "__main__":
     val_ds = tf.data.Dataset.from_tensor_slices((val_token, val_label))
     val_ds = val_ds.batch(32)
 
-    embedding_dim = 128
+    embedding_dim = 256
 
     model = tf.keras.Sequential(
         [
             layers.Embedding(preprocess.max_words + 1, embedding_dim),
-            layers.Bidirectional(layers.GRU(128)),
-            layers.Dropout(0.1),
+            # layers.Bidirectional(layers.GRU(128)),
+            layers.GRU(256),
+            # layers.Dropout(0.1),
             # layers.Conv1D(60, 8, activation='gelu'),
             # layers.GlobalAveragePooling1D(),
-            layers.Dense(60),
-            layers.Dense(30),
+            layers.Dense(128),
+            layers.Dense(50),
             layers.Dense(7, activation="gelu"),
             layers.Softmax(),
         ]
