@@ -75,7 +75,7 @@ if __name__ == "__main__":
     val_ds = tf.data.Dataset.from_tensor_slices((val_token, val_label))
     val_ds = val_ds.batch(32)
 
-    embedding_dim = 156
+    embedding_dim = 512
 
     model = tf.keras.Sequential(
         [
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     # f1 = tfa.metrics.F1Score(7, "macro")
     model.compile(loss=losses.SparseCategoricalCrossentropy(from_logits=False), optimizer="adam", metrics=["accuracy"])
 
-    epochs = 20
+    epochs = 2
     model.fit(ds, epochs=epochs, validation_data=val_ds)
 
     model.save("saved_model/my_model")
