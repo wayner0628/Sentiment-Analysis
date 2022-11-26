@@ -75,17 +75,13 @@ if __name__ == "__main__":
     val_ds = tf.data.Dataset.from_tensor_slices((val_token, val_label))
     val_ds = val_ds.batch(32)
 
-    embedding_dim = 512
+    embedding_dim = 256
 
     model = tf.keras.Sequential(
         [
             layers.Embedding(preprocess.max_words + 1, embedding_dim),
             layers.Bidirectional(layers.GRU(50)),
-            # layers.Dropout(0.1),
-            # layers.Conv1D(60, 8, activation='gelu'),
-            # layers.GlobalAveragePooling1D(),
-            layers.Dense(50),
-            layers.Dense(20),
+            layers.Dense(25),
             layers.Dense(7, activation="gelu"),
             layers.Softmax(),
         ]
@@ -94,7 +90,7 @@ if __name__ == "__main__":
     # f1 = tfa.metrics.F1Score(7, "macro")
     model.compile(loss=losses.SparseCategoricalCrossentropy(from_logits=False), optimizer="adam", metrics=["accuracy"])
 
-    epochs = 2
+    epochs = 1
     model.fit(ds, epochs=epochs, validation_data=val_ds)
 
     model.save("saved_model/my_model")
