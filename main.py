@@ -75,7 +75,7 @@ if __name__ == "__main__":
     val_ds = tf.data.Dataset.from_tensor_slices((val_token, val_label))
     val_ds = val_ds.batch(32)
 
-    embedding_dim = 256
+    embedding_dim = 512
 
     model = tf.keras.Sequential(
         [
