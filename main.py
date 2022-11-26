@@ -81,7 +81,8 @@ if __name__ == "__main__":
         [
             layers.Embedding(preprocess.max_words + 1, embedding_dim),
             layers.Bidirectional(layers.GRU(50)),
-            layers.Dense(25),
+            layers.Dense(50),
+            layers.Dense(20),
             layers.Dense(7, activation="gelu"),
             layers.Softmax(),
         ]
@@ -90,7 +91,7 @@ if __name__ == "__main__":
     # f1 = tfa.metrics.F1Score(7, "macro")
     model.compile(loss=losses.SparseCategoricalCrossentropy(from_logits=False), optimizer="adam", metrics=["accuracy"])
 
-    epochs = 1
+    epochs = 2
     model.fit(ds, epochs=epochs, validation_data=val_ds)
 
     model.save("saved_model/my_model")
